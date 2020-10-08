@@ -1,0 +1,76 @@
+
+entity Produto {
+	nome String
+    descricao TextBlob
+    preco Float
+    foto String
+    datacadastro LocalDate
+    estado Boolean
+    estoque Interger
+}
+
+entity Cliente {
+	nome String
+    telefone String
+    email String
+    login String
+    senha String
+    cep Interger
+    logradouro String
+    bairro String
+    cidade String
+}
+
+entity Pedido {
+	dataCadastro LocalDate
+    listaProdutos TextBlob
+    pagamento FormaPagamento
+    precoTotal Float
+    troco Float
+    obsEntrega TextBlob
+    statusPedido StatusPd
+    entregador String
+    cliente String
+    
+}
+
+entity Entregador {
+		nome String
+        placaMoto String
+        latitude Double
+    	longitude Double
+		cpf Integer
+        linkFoto String
+}
+
+enum FormaPagamento {
+		DINHEIRO, CARTAO
+
+}
+
+enum StatusPd {
+		PEDIDO, TRANSITO, ENTREGUE
+}
+
+relationship OneToMany {
+		Cliente {nome} to Produto {nome}
+        Cliente to Pedido {cliente(nome)}
+        Entregador {nome} to Cliente {nome} 
+        Pedido {cliente} to Produto {nome}
+        Entregador {nome} to Pedido {cliente}
+        }
+
+
+
+// Set pagination options
+paginate JobHistory, Employee with infinite-scroll
+paginate Job with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl except Employee, Job
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
